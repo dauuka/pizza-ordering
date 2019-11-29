@@ -1,0 +1,39 @@
+@model IEnumerable<Domain.FullOrder>
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<h1>My Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sum (€)</th>
+            <th>Time</th>
+            <th>Order State</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderState.OrderStateName)
+            </td>
+            <td>
+                @if (item.Address == null && item.Sum > 0)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">View</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

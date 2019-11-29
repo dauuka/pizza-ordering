@@ -1,0 +1,73 @@
+<template>
+
+  <div class="text-center">
+    <h1>Cart</h1>
+  </div>
+
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Product name</th>
+        <th>Product value</th>
+        <th>Quantity</th>
+        <th>Added components</th>
+        <th>Line sum</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr repeat.for="orderLine of cart.orderLines">
+        <td><a route-href="route: productsDetails; params.bind: {id: orderLine.productId}">${orderLine.product.productName}</a></td>
+        <td>${orderLine.productValue.toFixed(2)} €</td>
+        <td>${orderLine.productQuantity}</td>
+        <td>
+          <div repeat.for="componentInLine of orderLine.componentInLines">
+            <div>${componentInLine.component.componentName} (${componentInLine.component.componentValue.toFixed(2)} €)</div>
+          </div>
+        </td>
+        <td>${orderLine.lineSum.toFixed(2)} €</td>
+        <td>
+          <button click.delegate="deleteOrderLine(orderLine.id)" class="remove-button" type="button" name="removeButton">
+            <img src="../pictures/RemoveButton.jpg" alt="" />
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center">
+    <br/>
+    <h4><b>Sum: ${(cart.sum + selectedTransport.transportValue).toFixed(2)} €</b></h4>
+    <br/>
+    <h5>Select transport:</h5>
+    <div repeat.for="transport of transports">
+      <label>
+        <input type="radio" name="transportSelection"
+               model.bind="transport" checked.bind="selectedTransport">
+        ${transport.transportName} <b>(+ ${transport.transportValue.toFixed(2)} €)</b>
+      </label>
+    </div>
+    <br/>
+
+    <form method="post" submit.delegate="checkOrderForSubmit(cart.orderLines)">
+      <div class="form-group">
+        <label class="control-label" for="Address">Address:</label><br/>
+        <input class="cart-input-address" type="text" id="Address" value.bind="cart.address" />
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="PhoneNumber">Phone number:</label><br/>
+        <input class="cart-input-phone" type="text" id="PhoneNumber" value.bind="cart.phoneNumber" />
+      </div>
+      <div class="error-message">${submitOrderErrorMessage}</div>
+      <div class="form-group">
+        <input type="submit" value="Order" class="btn btn-primary"/>
+      </div>
+    </form>
+    <div>
+      <a route-href="route: home">Back to product list</a>
+    </div>
+  </div>
+  
+</template>

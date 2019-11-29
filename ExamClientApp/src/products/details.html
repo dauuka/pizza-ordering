@@ -1,0 +1,90 @@
+<template>
+  
+  <div class="text-center">
+    <hr />
+    <div if.bind="product.productTypeId == 1">
+      <div>
+        <h4><b>${product.productName}</b></h4>
+      </div>
+      <div>
+        ${product.productDescription}
+      </div>
+      <div>
+        <b>${product.productValue.toFixed(2)} €</b>
+      </div>
+      
+      <br/>
+      <form method="post" show.bind="appConfig.jwt != null" submit.delegate="submit()">
+
+        <br/>
+        <b>Add components:</b>
+        <br/>
+        <div repeat.for="component of components">
+          <input type="checkbox" model.bind="component" id="component.id" name="additions" checked.bind="selectedComponents" change.delegate="changePrice()"/>
+          <label for="component.id"></label>
+          ${component.componentName} <b>(${component.componentValue.toFixed(2)} €)</b>
+        </div>
+
+        <br/>
+        <b>Quantity:</b>
+        <br/>
+        <div>
+          <button click.delegate="decreaseQuantity()" class="quantity-button" type="button" name="quantityButton">
+            <img src="../pictures/QuantityMinus.jpg" alt="" />
+          </button>
+          ${quantity}
+          <button click.delegate="increaseQuantity()" class="quantity-button" type="button" name="quantityButton">
+            <img src="../pictures/QuantityPlus.jpg" alt="" />
+          </button>
+        </div>
+
+        <h3>Price: ${price.toFixed(2)} €</h3>
+        <br/>
+        
+        <div class="form-group">
+          <input type="submit" value="Add to cart" class="btn btn-primary"/>
+        </div>
+      </form>
+    </div>
+
+    <div if.bind="product.productTypeId == 2">
+      <div>
+        <h4><b>${product.productName}</b></h4>
+      </div>
+      <div>
+        ${product.productDescription}
+      </div>
+      <div>
+        <b>${product.productValue.toFixed(2)} €</b>
+      </div>
+      
+      <br/>
+      <form method="post" show.bind="appConfig.jwt != null" submit.delegate="submit()">
+        <b>Quantity:</b>
+        <br/>
+        <div>
+          <button click.delegate="decreaseQuantity()" class="quantity-button" type="button" name="quantityButton">
+            <img src="../pictures/QuantityMinus.jpg" alt="" />
+          </button>
+          ${quantity}
+          <button click.delegate="increaseQuantity()" class="quantity-button" type="button" name="quantityButton">
+            <img src="../pictures/QuantityPlus.jpg" alt="" />
+          </button>
+        </div>
+
+        <h3>Price: ${price.toFixed(2)} €</h3>
+        <br/>
+        
+        <div class="form-group">
+          <input type="submit" value="Add to cart" class="btn btn-primary"/>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+
+  <div class="text-center">
+    <button click.delegate="goBack()" value="Back" class="btn btn-link" type="button">Go Back</button>
+  </div>
+
+</template>

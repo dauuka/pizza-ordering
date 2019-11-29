@@ -1,0 +1,59 @@
+@model WebApp.ViewModels.ProductDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="text-center">
+    <hr />
+    <div>
+        <h4><b>@Html.DisplayFor(model => model.Product.ProductName)</b></h4>
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.Product.ProductDescription)
+    </div>
+    <div>
+        <b>@Html.DisplayFor(model => model.Product.ProductValue) €</b>
+    </div>
+    
+    @if (Model.Product.ProductTypeId == 1)
+    {
+        <br/>
+        <b>Add Components</b>
+        <br/>
+        foreach (var component in Model.Components)
+        {
+            <div>
+                <input type="checkbox" value="@component.Id" id="@component.Id" name="additions" />
+                <label for="@component.Id"></label>
+                @component.ComponentName <b>(@component.ComponentValue €)</b>
+            </div> 
+        }
+    }
+    
+    <br/>
+    <b>Quantity</b>
+    <br/>
+    <div>
+        <button class="quantity-button" type="button" name="quantityButton">
+            <img src="~/pictures/QuantityMinus.jpg" alt="" />
+        </button>
+        1
+        <button class="quantity-button" type="button" name="quantityButton">
+            <img src="~/pictures/QuantityPlus.jpg" alt="" />
+        </button>
+    </div>
+    <br/>
+</div>
+
+<div class="text-center">
+    <form asp-action="AddToCart">
+        <input type="hidden" asp-for="Product.Id" />
+        <input type="hidden" asp-for="Product.ProductValue" />
+        <input type="submit" value="Add to Cart" class="btn btn-primary" />
+    </form>
+    <br/>
+    <br/>
+    
+    <a asp-action="Index">Back to Products List</a>
+</div>

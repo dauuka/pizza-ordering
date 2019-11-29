@@ -1,0 +1,66 @@
+@model WebApp.ViewModels.FullOrderEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Edit Order State</h4>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Sum (€)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullOrder.Sum)
+        </dd>
+        <dt class = "col-sm-2">
+            Address
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullOrder.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            Phone Number
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullOrder.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="FullOrder.Sum" type="hidden" />
+            <input asp-for="FullOrder.Time" type="hidden" />
+            <input asp-for="FullOrder.Address" type="hidden" />
+            <input asp-for="FullOrder.PhoneNumber" type="hidden" />
+            
+            <div class="form-group">
+                <label asp-for="FullOrder.OrderStateId" class="control-label"></label>
+                <select asp-for="FullOrder.OrderStateId" class="form-control" asp-items="Model.OrderStateSelectList">
+                    <option value="">Select</option>
+                </select>
+                <span asp-validation-for="FullOrder.OrderStateId" class="text-danger"></span>
+            </div>
+            
+            <input asp-for="FullOrder.AppUserId" type="hidden" />
+            <input asp-for="FullOrder.TransportId" type="hidden" />
+            <input type="hidden" asp-for="FullOrder.Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

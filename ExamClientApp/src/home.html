@@ -1,0 +1,78 @@
+<template>
+
+  <div class="text-center home-picture-container">
+    <img src="pictures/HomeBackground.jpg" class="home-image"/>
+    <div class="centered-text"><h1 style="font-size:5vw"><b>Welcome to PizzaApp!</b></h1></div>
+  </div>
+
+  <br/>
+  <div>
+    <h4>Pizzas</h4>
+    <table class="table">
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>
+          Description
+        </th>
+        <th>
+          Price
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr repeat.for="product of products" if.bind="product.productTypeId == 1">
+        <td>
+          <div><img src="pictures/Pizza.jpg" alt="" width="50" height="50"/></div>
+        </td>
+        <td>
+          <a route-href="route: productsDetails; params.bind: {id: product.id}"><h4>${product.productName}</h4></a>
+        </td>
+        <td>
+          ${product.productDescription}
+        </td>
+        <td>
+          <b>${product.productValue.toFixed(2)} €</b>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <br/>
+    <h4>Drinks</h4>
+    <table class="table">
+      <thead>
+      <tr>
+        <th></th>
+        <th>
+          Name
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          Price
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr repeat.for="product of products" if.bind="product.productTypeId == 2">
+        <td>
+          <div><img src="pictures/Drink.jpg" alt="" width="50" height="50"/></div>
+        </td>
+        <td>
+          <a route-href="route: productsDetails; params.bind: {id: product.id}"><h4>${product.productName}</h4></a>
+        </td>
+        <td>
+          <div>${product.productDescription}</div>
+        </td>
+        <td>
+          <div>${product.productValue.toFixed(2)} €</div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</template>

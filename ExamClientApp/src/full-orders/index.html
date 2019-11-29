@@ -1,0 +1,48 @@
+<template>
+
+  <h1>My Orders</h1>
+  
+  <div if.bind="fullOrders.length >= 1">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>
+          Order sum
+        </th>
+        <th>
+          Time
+        </th>
+        <th>
+          Status
+        </th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr repeat.for="fullOrder of fullOrders">
+        <td>
+          ${fullOrder.sum.toFixed(2)} €
+        </td>
+        <td>
+          ${fullOrder.time}
+        </td>
+        <td>
+          <div if.bind="fullOrder.orderStateId != null">
+            ${fullOrder.orderState.orderStateName}
+          </div>
+        </td>
+        <td>
+          <div if.bind="fullOrder.address == null">
+            <a route-href="route: fullOrdersDetails; params.bind: {id: fullOrder.id}">View</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div if.bind="fullOrders.length < 1">
+    You have not ordered anything yet.
+  </div>
+
+</template>

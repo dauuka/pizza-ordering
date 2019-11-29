@@ -1,0 +1,81 @@
+@model WebApp.ViewModels.MyOrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<div class="text-center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Product name</th>
+            <th>Product value</th>
+            <th>Quantity</th>
+            <th>Added components</th>
+            <th>Line sum</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.FullOrder.OrderLines)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">
+                        @item.Product.ProductName
+                    </a>
+                </td>
+                <td>@item.ProductValue €</td>
+                <td>@item.ProductQuantity</td>
+                <td>
+                    @foreach (var comp in item.ComponentInLines)
+                    {
+                        <div>@comp.Component.ComponentName (@comp.Component.ComponentValue €)</div>
+                    }
+                </td>
+                <td>@item.LineSum €</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h5>Total amount (without transport): <b>@Model.FullOrder.Sum €</b></h5>
+</div>
+<br/>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FullOrder.Id" />
+            <input type="hidden" asp-for="FullOrder.Sum" />
+            <input type="hidden" asp-for="FullOrder.AppUserId" />
+            <input type="hidden" asp-for="FullOrder.OrderLines" />
+        
+            <div class="form-group">
+                <label asp-for="FullOrder.TransportId" class="control-label"></label>
+                <select asp-for="FullOrder.TransportId" class="form-control" asp-items="Model.TransportSelectList"></select>
+                <span asp-validation-for="FullOrder.TransportId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullOrder.Address" class="control-label"></label>
+                <input asp-for="FullOrder.Address" class="form-control" />
+                <span asp-validation-for="FullOrder.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullOrder.PhoneNumber" class="control-label"></label>
+                <input asp-for="FullOrder.PhoneNumber" class="form-control" />
+                <span asp-validation-for="FullOrder.PhoneNumber" class="text-danger"></span>
+            </div>
+        
+            <div class="form-group">
+                <input type="submit" value="Order" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

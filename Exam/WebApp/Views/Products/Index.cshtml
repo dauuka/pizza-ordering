@@ -1,0 +1,44 @@
+@model IEnumerable<Domain.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Product Name</th>
+        <th>Product Description</th>
+        <th>Product Value (€)</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (item.ProductTypeId == 1)
+                {
+                    <img src="~/pictures/Pizza.jpg" alt="" width="40" height="40"/>
+                } else if (item.ProductTypeId == 2)
+                {
+                    <img src="~/pictures/Drink.jpg" alt="" width="40" height="40"/>
+                }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductValue)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
